@@ -1,0 +1,60 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Websharper.Rickshaw", "Websharper.Rickshaw\Websharper.Rickshaw.fsproj", "{1AB05E65-8C63-4CFA-8291-33DBADD4C7B6}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Bars", "Bars\Bars.fsproj", "{4F673515-9F47-456F-966B-1E1C58D982CF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1AB05E65-8C63-4CFA-8291-33DBADD4C7B6} = {1AB05E65-8C63-4CFA-8291-33DBADD4C7B6}
+	EndProjectSection
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Colors", "Colors\Colors.fsproj", "{1D67D496-7642-40AE-820C-A96D1BF421B1}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Extensions", "Extensions\Extensions.fsproj", "{C5BBA87A-7F00-4CBA-B74D-13ECCD8C559A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0DB7D3BB-1890-4994-AE3E-3DD2DCB82F6C}"
+	ProjectSection(SolutionItems) = preProject
+		.hgignore = .hgignore
+	EndProjectSection
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Simple", "Simple\Simple.fsproj", "{382F780B-F1E5-454A-AC74-9C39978DD520}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Ajax", "Ajax\Ajax.fsproj", "{F22FE5C6-2240-48C8-A9D3-9EFD9EE537F3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1AB05E65-8C63-4CFA-8291-33DBADD4C7B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AB05E65-8C63-4CFA-8291-33DBADD4C7B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AB05E65-8C63-4CFA-8291-33DBADD4C7B6}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AB05E65-8C63-4CFA-8291-33DBADD4C7B6}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{4F673515-9F47-456F-966B-1E1C58D982CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F673515-9F47-456F-966B-1E1C58D982CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F673515-9F47-456F-966B-1E1C58D982CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F673515-9F47-456F-966B-1E1C58D982CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D67D496-7642-40AE-820C-A96D1BF421B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D67D496-7642-40AE-820C-A96D1BF421B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D67D496-7642-40AE-820C-A96D1BF421B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D67D496-7642-40AE-820C-A96D1BF421B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5BBA87A-7F00-4CBA-B74D-13ECCD8C559A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5BBA87A-7F00-4CBA-B74D-13ECCD8C559A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5BBA87A-7F00-4CBA-B74D-13ECCD8C559A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5BBA87A-7F00-4CBA-B74D-13ECCD8C559A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{382F780B-F1E5-454A-AC74-9C39978DD520}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{382F780B-F1E5-454A-AC74-9C39978DD520}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{382F780B-F1E5-454A-AC74-9C39978DD520}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{382F780B-F1E5-454A-AC74-9C39978DD520}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F22FE5C6-2240-48C8-A9D3-9EFD9EE537F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F22FE5C6-2240-48C8-A9D3-9EFD9EE537F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F22FE5C6-2240-48C8-A9D3-9EFD9EE537F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F22FE5C6-2240-48C8-A9D3-9EFD9EE537F3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
