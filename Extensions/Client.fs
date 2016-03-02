@@ -45,12 +45,12 @@ module Client =
 
         let RangeSlider = Rickshaw.Graph.RangeSlider(Slider(Preview.Dom,Graph))
 
-        let XFormatter = 
+        let XFormat = 
             fun x ->
-                Date( x*1000 ).ToLocaleString
+                Date( x*1000 ).ToDateString()
 
-        // Fix the problem which encounter when trying to apply a xFormatter
-        let HoverDetail = Rickshaw.Graph.HoverDetail(Hover(Graph))
+       
+        let HoverDetail = Rickshaw.Graph.HoverDetail(Hover(Graph, XFormatter=XFormat))
 
         let TimeLine = Doc.Element "div" [attr.id "timeline"] [Doc.Empty]
         
@@ -106,15 +106,14 @@ module Client =
 
         AddAnnotation(true)
 
-        // it is interesting
-//        JS.SetTimeout((function () ->
-//            JS.SetInterval(AddAnnotation) |> ignore
-//                
-//
-//            ))
-
-//        let PrevXA = Rickshaw.Graph.Axis.Time(XAxis(RangeSlider.Previews.[0], TicksTreatment="glow", TimeFixture=Rickshaw.Fixtures.Time.Local()))
-        
+         
+        JS.SetTimeout((function () ->
+            JS.SetInterval(function () -> AddAnnotation(false)) <| 6000 |> ignore
+            )) |> ignore
+            
+//        Actually this way it isn't working in the example too TODO: create the RangeSlider.Preview
+//        let PrevXA = Rickshaw.Graph.Axis.Time(XAxis(RangeSlider.Previews.JS.[0], TicksTreatment="glow", TimeFixture=Rickshaw.Fixtures.Time.Local()))
+//        
 //        PrevXA.Render()
         
         let Form = 
@@ -132,7 +131,10 @@ module Client =
         let Chart =
             Doc.Element
                 "div"
-                []
+                [
+                    attr.id "side-panel"
+                    attr.style "float: left; margin: 10px"
+                ]
                 [
                     Place
                     TimeLine

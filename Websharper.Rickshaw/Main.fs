@@ -235,9 +235,22 @@ module Definition =
                     ]
             }
         |>! addToClassList
+
+    let FixDurObj = 
+        Pattern.Config "FixDurObj"
+            {
+            Required = 
+                [
+                    "timeInterval", Int
+                    "maxDataPoints", Int
+                    "timeBase", Int
+                ]
+            Optional = []
+            }
+         |>! addToClassList
        
 //    let TimeFixture = Pattern.Config "TimeFixture" {Required = ["timeFixture", Obj]; Optional = []}
-
+//    TODO: defining more available options
 
     let Rickshaw = 
         Class "Rickshaw"
@@ -384,6 +397,16 @@ module Definition =
                         "color" => O ^-> String
                         "scheme" =? !|String
                         "interpolateColor" => O ^-> String
+                    ]
+                ]
+            Class "Rickshaw.Series"
+                |=> Nested [
+                    Class "Rickshaw.Series.FixedDuration"
+                    |+> Static [
+                        Constructor (!|Obj * String * FixDurObj)
+                    ]
+                    |+> Instance [
+                        "addData" => Obj ^-> O
                     ]
                 ]
         ] |>! addToClassList
