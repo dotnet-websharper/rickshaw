@@ -29,9 +29,9 @@ module Client =
 
         let D =
             [|
-                Series(SeriesData.[0], "#c05020")
-                Series(SeriesData.[1], "#30c020")
-                Series(SeriesData.[2], "#6060c0")
+                Series(SeriesData.[0], Color = "#c05020")
+                Series(SeriesData.[1], Color = "#30c020")
+                Series(SeriesData.[2], Color = "#6060c0")
             |]
 
         let GData = GraphData(Place.Dom, D, Renderer="bar", Width=960, Height=500) 

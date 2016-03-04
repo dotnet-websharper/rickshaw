@@ -60,7 +60,7 @@ module Definition =
                 Required =
                     [
                         "x", Int
-                        "y", Int
+                        "y", Float + Int
                     ]
                 Optional = []
             }
@@ -72,11 +72,12 @@ module Definition =
                 Required =
                     [
                         "data", !|Coord
-                        "color", String
                     ]
                 Optional = 
                     [
                         "name", String
+                        "color", String
+                        "scale", Obj
                     ]
             }
         |>! addToClassList
@@ -89,12 +90,15 @@ module Definition =
                         "name", String
                         "color", String
                     ]
-                Optional = []
+                Optional = 
+                    [
+                        "scale", Obj
+                    ]
             }
         |>! addToClassList
 
-    let AjaxConfig = 
-        Pattern.Config "AjaxConfig" 
+    let FileConfig = 
+        Pattern.Config "FileConfig" 
             {
                 Required = 
                     [
@@ -115,6 +119,9 @@ module Definition =
                         "min", String
                         "unstack", Bool
                         "series", !|SeriesColor
+                        "xScale", Obj
+                        "yScale", Obj
+                        "strokewidth", Float
                     ]
             }
         |>! addToClassList
@@ -125,19 +132,23 @@ module Definition =
                 Required = 
                     [
                         "element", Element
-                        "series", !|Series
+                        "series", !|Series + Obj
                     ]
                 Optional =
                     [
                         "width", Int
                         "height", Int
                         "interpolation", String
+                        "onData", Series ^-> Series
                         "renderer", String
                         "stroke", Bool
                         "preserve", Bool
                         "padding", Obj
                         "min", String
                         "unstack", Bool
+                        "xScale", Obj
+                        "yScale", Obj
+                        "strokeWidth", Float
                     ]
             }
         |>! addToClassList
@@ -176,7 +187,7 @@ module Definition =
                     ]
                 Optional = 
                     [
-                        "formatter", !|Obj * Int * Int ^-> String
+                        "formatter", Obj * Int * Int ^-> String
                         "xFormatter", Int ^-> String
                     ]
             }
@@ -215,8 +226,10 @@ module Definition =
                     ]
                 Optional = 
                     [
+                        "orientation", String
                         "ticksTreatment", String
                         "timeFixture", Obj
+                        "pixelsPerTick", Int
                     ]
             }
         |>! addToClassList
@@ -230,8 +243,10 @@ module Definition =
                     ]
                 Optional = 
                     [
+                        "pixelsPerTick", Int
                         "ticksTreatment", String
                         "ticksFormat", Obj
+                        "orientation", String
                     ]
             }
         |>! addToClassList
@@ -248,9 +263,18 @@ module Definition =
             Optional = []
             }
          |>! addToClassList
-       
-//    let TimeFixture = Pattern.Config "TimeFixture" {Required = ["timeFixture", Obj]; Optional = []}
-//    TODO: defining more available options
+
+    let FixDurArr = 
+        Pattern.Config "FixDurArr"
+            {
+            Required = 
+                [
+                    "name", String
+                ]
+            Optional = []
+            }
+        |>! addToClassList
+
 
     let Rickshaw = 
         Class "Rickshaw"
@@ -264,37 +288,37 @@ module Definition =
             Class "Rickshaw.Graph"
             |+> Static [
                 Constructor GraphData
-    //            "initialize" => !|Element ^-> O
-    //            "_loadRenderers" => O ^-> O
-    //            "validateSeries" => !|Obj ^-> O
-    //            "dataDomain" => O ^-> Float2T
-    //            "discoverRange" => O ^-> O
             ]
             |+> Instance [
                 "render" => O ^-> O
                 "update" => O ^-> O
                 "element" =@ Element
-                "configure" => Obj ^-> O
-    //            "stackData" => O ^-> !|Coord
-    //            "_validateStackable" => O ^-> O
-    //            "_slice" => Int ^-> Bool
-    //            "onUpdate" => Obj ^-> O
-    //            "onConfigure" => Obj ^-> O
-    //            "registerRenderer" => Obj ^-> O
-    //            "setRenderer" => String  ^-> O 
-    //            "setSize" => Obj ^-> O
+                "configure" => GraphData ^-> O
+                "series" =@ !|Series + Obj
+                "setRenderer" => String  ^-> O 
+                "setSize" => Obj ^-> O
             ]
             |=> Nested [
                 Class "Rickshaw.Graph.Ajax"
                 |+> Static [
-                    Constructor AjaxConfig
+                    Constructor FileConfig
+                ]
+                Class "Rickshaw.Graph.JSONP"
+                |+> Static [
+                    Constructor FileConfig
                 ]
                 Class "Rickshaw.Graph.RangeSlider"
                 |+> Static [
                     Constructor Slide
                 ]
-                |+> Instance [
-                    "previews" =? !|Obj
+                |=> Nested [
+                    Class "Rickshaw.Graph.RangeSlider.Preview"
+                    |+> Static [
+                        Constructor Slide
+                    ]
+                    |+> Instance [
+                        "previews" =? !|Obj
+                    ]
                 ]
                 Class "Rickshaw.Graph.HoverDetail"
                 |+> Static [
@@ -386,6 +410,18 @@ module Definition =
                     "formatKMBT" => Float ^-> String
                     "formatBase1024KMGTP" => Float ^-> String
                 ]
+                Class "Rickshaw.Fixtures.Color"
+                |+> Static [
+                    "schemes"                =? !|String
+                    "schemes.spectrum14"     =? !|String
+                    "schemes.spectrum2000"   =? !|String
+                    "schemes.spectrum2001"   =? !|String
+                    "schemes.classic9"       =? !|String
+                    "schemes.httpStatus"     =? !|Obj
+                    "schemes.colorwheel"     =? !|String
+                    "schemes.cool"           =? !|String
+                    "schemes.munin"          =? !|String
+                ]
             ]
             Class "Rickshaw.Color"
                 |=> Nested [
@@ -403,7 +439,7 @@ module Definition =
                 |=> Nested [
                     Class "Rickshaw.Series.FixedDuration"
                     |+> Static [
-                        Constructor (!|Obj * String * FixDurObj)
+                        Constructor (!|FixDurArr * String * FixDurObj)
                     ]
                     |+> Instance [
                         "addData" => Obj ^-> O
@@ -416,74 +452,21 @@ module Definition =
         |+> Static [
             Constructor Legend
         ] |>! addToClassList
-
-//    let RickshawCompatClassList =
-//        Class "Rickshaw.Compat.ClassList"
-//        |+> Static [
-            
         
-//    
-//
-//    let RickshawFixturesColor = 
-//        Class "Rickshaw.Fixtures.Color"
-//        |+> Static [
-//            "schemes"                =? !|String
-//            "schemes.spectrum14"     =? !|String
-//            "schemes.spectrum2000"   =? !|String
-//            "schemes.spectrum2001"   =? !|String
-//            "schemes.classic9"       =? !|String
-//            "schemes.httpStatus"     =? !|Obj
-//            "schemes.colorwheel"     =? !|String
-//            "schemes.cool"           =? !|String
-//            "schemes.munin"          =? !|String
-//        ]
-////      
-//    let RickshawFixturesNumber =
-//        Class "Rickshaw.Fixtures.Number"
-//        |+> Static [
-//            "formatKMBT" => Float ^-> String //?
-//            "formatBase1024KMGTP" => Float ^-> String //?
-//        ]
-
-//        
-//    let RickshawGraphAxisY = 
-//        
-////
 
 
-////    let AddAnnotation = Method "addAnnotation" (Bool ^-> O)
-////
-//    let RickshawSeriesFixedDuration =
-//        Class "Rickshaw.Series.FixedDuration"
-//        |+> Static [
-//            Constructor Asd
-//            "addData" => Obj  ^-> O
-//        ]
+
+
+
 ////
 ////    //??? Rickshaw.Class.create()???
-////
-////    let RickshawGraphJSONPStatic = 
-////        Class "Rickshaw.Graph.JSONP.Static"
-////        |+> Static [
-////            Constructor ElementNeed
-////        ]
-////
-////
+
 ////    let RickshawGraphAxisYScaled =
 ////        Class "Rickshaw.Graph.Axis.Y.Scaled"
 ////        |+> Static [
 ////            Constructor Graph
 ////        ]
 ////
-//    let RickshawGraphRangeSliderPreview =
-//        Class "Rickshaw.Graph.RangeSlider.Preview"
-//        |+> Static [
-//            Constructor Legend
-//        ]
-//
-//    let TransformData = Method "transformData" (!|Obj ^-> !|Obj)
-//
-//    let RickshawSeriesZeroFill = Method "Rickshaw.Series.zeroFill" (!|Obj ^-> !|Obj)
 
     let RickshawAssembly =
         Assembly [
@@ -493,6 +476,7 @@ module Definition =
                 (Resource "RickshawCss" "https://cdnjs.cloudflare.com/ajax/libs/rickshaw/1.5.1/rickshaw.css").AssemblyWide()
                 (Resource "D3" "https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.16/d3.min.js").AssemblyWide()
                 (Resource "jQuery.ui" "https://code.jquery.com/ui/1.11.3/jquery-ui.min.js").AssemblyWide()
+                (Resource "jQuery-ui-css" "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css").AssemblyWide()
             ]
             
         ]

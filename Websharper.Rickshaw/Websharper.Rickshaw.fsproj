@@ -54,7 +54,6 @@
   <ItemGroup>
     <Compile Include="Main.fs" />
     <Content Include="rickshaw.min.js" />
-    <Content Include="extensions.js" />
   </ItemGroup>
   <Import Project="../build/net40/WebSharper.RickShaw.proj" />
 </Project>

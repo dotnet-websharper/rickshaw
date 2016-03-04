@@ -28,27 +28,26 @@ module Client =
 
         let Series = 
             [|
-                Series(SeriesData.[0], Palette.Color(), Name = "Moscow")
-                Series(SeriesData.[1], Palette.Color(), Name = "Shanghai")
-                Series(SeriesData.[2], Palette.Color(), Name = "Amsterdam")
-                Series(SeriesData.[3], Palette.Color(), Name = "Paris")
-                Series(SeriesData.[4], Palette.Color(), Name = "Tokyo")
-                Series(SeriesData.[5], Palette.Color(), Name = "London")
-                Series(SeriesData.[6], Palette.Color(), Name = "New York")
+                Series(SeriesData.[0], Color = Palette.Color(), Name = "Moscow")
+                Series(SeriesData.[1], Color = Palette.Color(), Name = "Shanghai")
+                Series(SeriesData.[2], Color = Palette.Color(), Name = "Amsterdam")
+                Series(SeriesData.[3], Color = Palette.Color(), Name = "Paris")
+                Series(SeriesData.[4], Color = Palette.Color(), Name = "Tokyo")
+                Series(SeriesData.[5], Color = Palette.Color(), Name = "London")
+                Series(SeriesData.[6], Color = Palette.Color(), Name = "New York")
             |]
 
         let Graph = Rickshaw.Graph(GraphData(Place.Dom, Series, Width=900, Height=500, Renderer="area", Stroke=true, Preserve=true))
 
         Graph.Render()
 
-        let Preview = Doc.Element "div" [attr.id "preview"] [Doc.Empty]
+        let Prev = Doc.Element "div" [attr.id "preview"] [Doc.Empty]
 
-        let RangeSlider = Rickshaw.Graph.RangeSlider(Slider(Preview.Dom,Graph))
+        let RangeSlider = Rickshaw.Graph.RangeSlider(Slider(Prev.Dom,Graph))
 
         let XFormat = 
             fun x ->
                 Date( x*1000 ).ToDateString()
-
        
         let HoverDetail = Rickshaw.Graph.HoverDetail(Hover(Graph, XFormatter=XFormat))
 
@@ -132,13 +131,12 @@ module Client =
             Doc.Element
                 "div"
                 [
-                    attr.id "side-panel"
                     attr.style "float: left; margin: 10px"
                 ]
                 [
                     Place
                     TimeLine
-                    Preview
+                    Prev
                 ]
 
 

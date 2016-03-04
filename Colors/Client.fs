@@ -68,7 +68,7 @@ module Client =
 
 
             Array.map (fun x ->
-                    Serie.JS.Push(Series(x,Palette.Color())) |> ignore
+                    Serie.JS.Push(Series(x,Color = Palette.Color())) |> ignore
             ) SeriesData |> ignore
 
             let Graph = Rickshaw.Graph(GraphData(Elem.Dom, Serie, Width=300, Height=200))

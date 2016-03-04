@@ -25,7 +25,7 @@ module Client =
 
         let Place = Doc.Element "div" [attr.id "diagram"] [Doc.Empty]
 
-        let GData = AjaxConfig(Place.Dom, "data.json", Renderer="line", Width=400, Height=200, OnData = Fun, Series=Color) 
+        let GData = FileConfig(Place.Dom, "data.json", Renderer="line", Width=400, Height=200, OnData = Fun, Series=Color) 
 
         let Test = Rickshaw.Graph.Ajax(GData)
 
