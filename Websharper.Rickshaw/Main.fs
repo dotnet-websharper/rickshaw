@@ -7,14 +7,6 @@ open WebSharper.JavaScript.Dom
 open WebSharper.JQuery
 
 module Definition =
-    
-
-    //Rickshaw series
-
-    let resourceList = 
-        [
-            Resource "jQuery.ui" "https://code.jquery.com/ui/1.11.3/jquery-ui.min.js"
-        ] : CodeModel.Resource list
 
     let mutable classList = [] : CodeModel.NamespaceEntity list
 
@@ -24,9 +16,6 @@ module Definition =
     let ( |>! ) x f =
         f x
         x
-
-    let EnumStrings name words = Pattern.EnumStrings name words |>! addToClassList
-
 
     let O = T<unit>
     let String = T<string>
@@ -43,7 +32,6 @@ module Definition =
     let Float3T = Type.Tuple [Float; Float; Float]
     let Float2x2T = Type.Tuple [Float2T; Float2T]
     let Comparator = Obj * Obj ^-> Int
-    let Asd = !|Obj * Obj * Obj //?
 
     let Date = T<JavaScript.Date>
     let DateTime = T<System.DateTime>
@@ -51,8 +39,6 @@ module Definition =
     let Element = T<Element>
     let NodeList = T<NodeList>
     let Event = T<Event>
-
-    //do this with JSON too, onComplete
 
     let Coord = 
         Pattern.Config "Coord"
@@ -78,6 +64,7 @@ module Definition =
                         "name", String
                         "color", String
                         "scale", Obj
+                        "stroke", String
                     ]
             }
         |>! addToClassList
@@ -93,6 +80,7 @@ module Definition =
                 Optional = 
                     [
                         "scale", Obj
+                        "stroke", String
                     ]
             }
         |>! addToClassList
@@ -122,6 +110,7 @@ module Definition =
                         "xScale", Obj
                         "yScale", Obj
                         "strokewidth", Float
+                        "onComplete", Obj ^-> O
                     ]
             }
         |>! addToClassList
@@ -166,7 +155,7 @@ module Definition =
                     ]
             }
         |>! addToClassList
-//
+
     let Slide =
         Pattern.Config "Slider"
             {
@@ -177,7 +166,7 @@ module Definition =
                     ]
                 Optional = []
             } |>! addToClassList
-//
+
     let Hover =
         Pattern.Config "Hover"
             {
@@ -192,7 +181,7 @@ module Definition =
                     ]
             }
         |>! addToClassList
-//
+
     let Legend =
         Pattern.Config "Legend"
             {
@@ -217,8 +206,8 @@ module Definition =
             }
         |>! addToClassList
 
-    let XAxis =
-        Pattern.Config "XAxis"
+    let TimeAxis =
+        Pattern.Config "TimeAxis"
             {
                 Required =
                     [
@@ -230,12 +219,13 @@ module Definition =
                         "ticksTreatment", String
                         "timeFixture", Obj
                         "pixelsPerTick", Int
+                        "element", Element
                     ]
             }
         |>! addToClassList
 
-    let YAxis =
-        Pattern.Config "YAxis"
+    let Axis =
+        Pattern.Config "Axis"
             {
                 Required =
                     [
@@ -247,6 +237,26 @@ module Definition =
                         "ticksTreatment", String
                         "ticksFormat", Obj
                         "orientation", String
+                        "element", Element
+                    ]
+            }
+        |>! addToClassList
+
+    let ScaledAxis =
+        Pattern.Config "ScaledAxis"
+            {
+                Required =
+                    [
+                        "graph", Obj
+                        "scaled", Obj
+                    ]
+                Optional = 
+                    [
+                        "pixelsPerTick", Int
+                        "ticksTreatment", String
+                        "ticksFormat", Obj
+                        "orientation", String
+                        "element", Element
                     ]
             }
         |>! addToClassList
@@ -293,10 +303,11 @@ module Definition =
                 "render" => O ^-> O
                 "update" => O ^-> O
                 "element" =@ Element
-                "configure" => GraphData ^-> O
+                "configure" => Obj ^-> O
                 "series" =@ !|Series + Obj
                 "setRenderer" => String  ^-> O 
                 "setSize" => Obj ^-> O
+                "offset" =@ String
             ]
             |=> Nested [
                 Class "Rickshaw.Graph.Ajax"
@@ -351,7 +362,7 @@ module Definition =
                         Class "Rickshaw.Graph.Behavior.Series.Order"
                         |+> Static [
                             Constructor GLegend
-                        ] |> Requires resourceList 
+                        ]
                         Class "Rickshaw.Graph.Behavior.Series.Highlight"
                         |+> Static [
                             Constructor GLegend
@@ -360,19 +371,32 @@ module Definition =
                 ]
                 Class "Rickshaw.Graph.Axis"
                 |=> Nested [
+                    Class "Rickshaw.Graph.Axis.X"
+                    |+> Static [
+                        Constructor Axis
+                    ]
+                    |+> Instance [
+                         "render" => O ^-> O
+                    ]
                     Class "Rickshaw.Graph.Axis.Time"
                     |+> Static [
-                        Constructor XAxis
+                        Constructor TimeAxis
                     ]
                     |+> Instance [
                          "render" => O ^-> O
                     ]
                     Class "Rickshaw.Graph.Axis.Y"
                     |+> Static [
-                        Constructor YAxis
+                        Constructor Axis
                     ]
                     |+> Instance [
                          "render" => O ^-> O
+                    ]
+                    |=> Nested [
+                        Class "Rickshaw.Graph.Axis.Y.Scaled"
+                        |+> Static [
+                            Constructor ScaledAxis
+                        ]
                     ]
                 ]
             ]
@@ -390,20 +414,27 @@ module Definition =
                 |+> Static [
                     Constructor O
                 ]
-//                |+> Instance [
-//                    "months" =? !|String
-//                    "units" =? !|Obj
-//                    "unit" => String ^-> !|Obj
-//                    "formatDate" => DateTime ^-> Date
-//                    "formatTime" => DateTime ^-> String
-//                    "ceil" => DateTime * Obj ^-> Float
-//                ]
+                |+> Instance [
+                    "months" =? !|String
+                    "units" =? !|Obj
+                    "unit" => String ^-> !|Obj
+                    "formatDate" => DateTime ^-> Date
+                    "formatTime" => DateTime ^-> String
+                    "ceil" => DateTime * Obj ^-> Float
+                ]
                 |=> Nested [
                     Class "Rickshaw.Fixtures.Time.Local"
                     |+> Static [
                         Constructor O
                     ]
-                    
+                    |+> Instance [
+                        "months" =? !|String
+                        "units" =? !|Obj
+                        "unit" => String ^-> !|Obj
+                        "formatDate" => DateTime ^-> Date
+                        "formatTime" => DateTime ^-> String
+                        "ceil" => DateTime * Obj ^-> Float
+                    ]
                 ]
                 Class "Rickshaw.Fixtures.Number"
                 |+> Static [
@@ -446,27 +477,6 @@ module Definition =
                     ]
                 ]
         ] |>! addToClassList
-
-    let RenderControls =
-        Class "RenderControls"
-        |+> Static [
-            Constructor Legend
-        ] |>! addToClassList
-        
-
-
-
-
-
-////
-////    //??? Rickshaw.Class.create()???
-
-////    let RickshawGraphAxisYScaled =
-////        Class "Rickshaw.Graph.Axis.Y.Scaled"
-////        |+> Static [
-////            Constructor Graph
-////        ]
-////
 
     let RickshawAssembly =
         Assembly [

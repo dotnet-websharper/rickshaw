@@ -43,7 +43,7 @@ module Client =
 
         let Prev = Doc.Element "div" [attr.id "preview"] [Doc.Empty]
 
-        let RangeSlider = Rickshaw.Graph.RangeSlider(Slider(Prev.Dom,Graph))
+        let Range = Rickshaw.Graph.RangeSlider.Preview(Slider(Prev.Dom,Graph))
 
         let XFormat = 
             fun x ->
@@ -69,11 +69,11 @@ module Client =
 
         let Smoother = Rickshaw.Graph.Smoother(Legend(Graph, Smooth.Dom))
 
-        let XA = Rickshaw.Graph.Axis.Time(XAxis(Graph, TicksTreatment="glow", TimeFixture=Rickshaw.Fixtures.Time.Local()))
+        let XA = Rickshaw.Graph.Axis.Time(TimeAxis(Graph, TicksTreatment="glow", TimeFixture=Rickshaw.Fixtures.Time.Local()))
 
         XA.Render()
 
-        let YA = Rickshaw.Graph.Axis.Y(YAxis(Graph, TicksTreatment="glow", TicksFormat=Rickshaw.Fixtures.Number.FormatKMBT))
+        let YA = Rickshaw.Graph.Axis.Y(Axis(Graph, TicksTreatment="glow", TicksFormat=Rickshaw.Fixtures.Number.FormatKMBT))
 
         YA.Render()
 
@@ -110,10 +110,10 @@ module Client =
             JS.SetInterval(function () -> AddAnnotation(false)) <| 6000 |> ignore
             )) |> ignore
             
-//        Actually this way it isn't working in the example too TODO: create the RangeSlider.Preview
-//        let PrevXA = Rickshaw.Graph.Axis.Time(XAxis(RangeSlider.Previews.JS.[0], TicksTreatment="glow", TimeFixture=Rickshaw.Fixtures.Time.Local()))
-//        
-//        PrevXA.Render()
+
+        let PrevXA = Rickshaw.Graph.Axis.Time(TimeAxis(Range.Previews.[0], TicksTreatment="glow", TimeFixture=Rickshaw.Fixtures.Time.Local()))
+        
+        PrevXA.Render()
         
         let Form = 
             Doc.Element

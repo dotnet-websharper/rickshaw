@@ -14,11 +14,7 @@ module Client =
 
     let Main =
         
-        let SeriesData = [| |] : (Coord []) []
-
-        SeriesData.JS.Push([| |] :Coord []) |> ignore
-        SeriesData.JS.Push([| |] :Coord []) |> ignore
-        SeriesData.JS.Push([| |] :Coord []) |> ignore
+        let SeriesData = [| [| |]; [| |]; [| |] |] : (Coord []) []
 
         let RanData = Rickshaw.Fixtures.RandomData(150)
         

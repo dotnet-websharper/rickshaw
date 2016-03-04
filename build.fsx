@@ -55,6 +55,15 @@ let extensions =
                 r.Project(main)
             ])
 
+let fixedduration = 
+    bt.WebSharper.BundleWebsite("FixedDuration")
+        .SourcesFromProject()
+        .References(fun r ->
+            [
+                r.NuGet("WebSharper.UI.Next").Reference()
+                r.Project(main)
+            ])
+
 
 bt.Solution [
     main
@@ -63,6 +72,7 @@ bt.Solution [
     colors
     extensions
     simple
+    fixedduration
 
     bt.NuGet.CreatePackage()
         .Add(main)
