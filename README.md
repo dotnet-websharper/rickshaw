@@ -4,8 +4,6 @@
 
 (The following is the introduction from [code.shutterstock.com][rickshaw] with samples translated to F#, and some comments on typing.)
 
-Rickshaw is a graphing toolkit, which allows you to create a chart to a Document Object Model (DOM). 
-
 Rickshaw is a handy tool, which allow you to create static and dynamic charts to a Document Object Model (DOM), which are actually well customisable. Rickshaw is based on the [D3][d3] library, and uses the [jQuery-ui][jqueryui] library.
 
 This extension works in modern browsers and Internet Explorer 9+.
@@ -26,7 +24,7 @@ Rickshaw.Graph takes a GraphData as an argument which can be constructed as GDat
 
 Series1 and Series2, which holds the data, is constructed by Series, which takes a list of Coords (which needs an integer as an x coordinate, and a float or and integer as an y coordinate) as a must-have argument, and additionally you can set the color, the name and the scale of this data. To render the graph, just call the created graph's render method.
 
-Optional GraphData features
+Optional GraphData features:
 
 * renderer - Needs a string, which identifies, what kind of chart you are want to create. ("line", "bar", "area", "scatter")
 * width - Set the width of the chart
