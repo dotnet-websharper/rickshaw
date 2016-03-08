@@ -173,6 +173,32 @@ In the example above, you can set a TicksFormat, when creating the number based 
 
 The time based axis can use the `Rickshaw.Fixtures.Time()`, or the `Rickshaw.Fixtures.Time.Local()` or function, which takes a date and returns a string.
 
+## Using random data
+
+```
+let Place = divAttr [attr.id "diagram"] [Doc.Empty]
+let Ser = Rickshaw.Series.FixedDuration([|FixDurArr("one")|], JS.Undefined, FixDurObj(250, 100, Date().GetTime()/1000))
+let Graph = Rickshaw.Graph(GraphData(Place.Dom,Ser,Width=900,Height=500,Renderer="line"))
+```
+
+You can pass a `Rickshaw.Series.FixedDuration` object to a Graph, as instead of a Series object. This needs an array of `FixedDurArr`-s (which needs a string as an argument, which defines the name of that data), a string, which defines the color palette (you can use `JS.Undefined`, if you don't want to pass a colorscheme) and a `FixDurObj` which takes 3 int as a parameter (time interval, max data points and time base). To add data to this object, let's see this example:
+
+```
+let mutable I = 0.
+JS.SetInterval( (function () ->
+        let randInt = Math.Random()*100.
+        I <- (I + 1.)
+        let data = New [
+            "one" => Math.Random() * 40. + 120.
+            "two" => (Math.Sin( I / 40.) + 4.) * (randInt + 400.)
+            "three" => randInt + 300.
+        ]
+        Ser.AddData(data)
+        Graph.Update() 
+    )) <| 250 |> ignore
+```
+
+You can add data with the `AddData` function, which requires an object as a parameter. Just pass an anonym object, which can be the constructed with the `New` keyword. This takes a list, where the property names will be the name of each line, and the given values will be the y values of the chart. After adding data, update the graph to render.
 
 [rickshaw]: http://code.shutterstock.com/rickshaw
 [d3]: http://d3js.org
