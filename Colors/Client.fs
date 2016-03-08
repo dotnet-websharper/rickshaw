@@ -36,22 +36,16 @@ module Client =
                 SeriesData.JS.Push([| |]: Coord []) |> ignore
             ) Palette.Scheme |> ignore
 
-//            Palette.Scheme.JS.ForEach( function (_,_,_) ->
-//                SeriesData.JS.Push([| |]: Coord []) > -1
-//            ) |> ignore
-
-//            List.map (fun a -> SeriesData.JS.Push([| |]: Coord [])) Schemes |> ignore
-
             let RanData = Rickshaw.Fixtures.RandomData(150)
         
             for i=1 to 70 do
                 RanData.AddData(SeriesData)
+            
                 
-            let Elem = Doc.Element "div" [] [Doc.Empty]
-            let Caption = Doc.Element "span" [] [ text d ]
+            let Elem = divAttr [] [Doc.Empty]
+            let Caption = spanAttr [] [ text d ]
             let Section = 
-                Doc.Element 
-                    "section" 
+                sectionAttr 
                     [
                         attr.width "300px"
                         attr.height "250px"

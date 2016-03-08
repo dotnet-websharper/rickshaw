@@ -12,7 +12,7 @@ open Websharper.Rickshaw
 module Client =    
     let Main =
 
-        let Place = Doc.Element "div" [attr.id "diagram"] [Doc.Empty]
+        let Place = divAttr [attr.id "diagram"] [Doc.Empty]
 
         let Ser = Rickshaw.Series.FixedDuration([|FixDurArr("one")|], JS.Undefined, FixDurObj(250, 100, Date().GetTime()/1000))
 

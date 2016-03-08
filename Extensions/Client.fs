@@ -24,7 +24,7 @@ module Client =
 
         let Palette = Rickshaw.Color.Palette(Scheme("classic9"))
 
-        let Place = Doc.Element "div" [attr.id "diagram"] [Doc.Empty]
+        let Place = divAttr [attr.id "diagram"] [Doc.Empty]
 
         let Series = 
             [|
@@ -41,7 +41,7 @@ module Client =
 
         Graph.Render()
 
-        let Prev = Doc.Element "div" [attr.id "preview"] [Doc.Empty]
+        let Prev = divAttr [attr.id "preview"] [Doc.Empty]
 
         let Range = Rickshaw.Graph.RangeSlider.Preview(Slider(Prev.Dom,Graph))
 
@@ -51,11 +51,11 @@ module Client =
        
         let HoverDetail = Rickshaw.Graph.HoverDetail(Hover(Graph, XFormatter=XFormat))
 
-        let TimeLine = Doc.Element "div" [attr.id "timeline"] [Doc.Empty]
+        let TimeLine = divAttr [attr.id "timeline"] [Doc.Empty]
         
         let Annotator = Rickshaw.Graph.Annotate(Legend(Graph, TimeLine.Dom))
 
-        let Leg = Doc.Element "div" [attr.id "legend"] []
+        let Leg = divAttr [attr.id "legend"] []
 
         let GraphLegend = Rickshaw.Graph.Legend(Legend(Graph, Leg.Dom))
 
@@ -65,7 +65,7 @@ module Client =
 
         let Highlight = Rickshaw.Graph.Behaviour.Series.Highlight(GLegend(Graph, GraphLegend))
 
-        let Smooth = Doc.Element "div" [attr.id "smoother"] []
+        let Smooth = divAttr [attr.id "smoother"] []
 
         let Smoother = Rickshaw.Graph.Smoother(Legend(Graph, Smooth.Dom))
 
@@ -116,8 +116,7 @@ module Client =
         PrevXA.Render()
         
         let Form = 
-            Doc.Element
-                "div"
+            divAttr
                 [
                     attr.id "side-panel"
                     attr.style "float: left"
@@ -128,8 +127,7 @@ module Client =
                 ]
 
         let Chart =
-            Doc.Element
-                "div"
+            divAttr
                 [
                     attr.style "float: left; margin: 10px"
                 ]
@@ -141,8 +139,7 @@ module Client =
 
 
         let Content =
-            Doc.Element
-                "div"
+            divAttr
                 [
                     attr.id "content"
                     attr.style "float: left"

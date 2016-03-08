@@ -21,7 +21,7 @@ module Client =
         for i=1 to 70 do
                 RanData.AddData(SeriesData)
 
-        let Place = Doc.Element "div" [attr.id "diagram"] [Doc.Empty]
+        let Place = divAttr [attr.id "diagram"] [Doc.Empty]
 
         let D =
             [|
@@ -37,7 +37,5 @@ module Client =
         Test.Render()
 
         div [
-            label [text "Hello"]
             Place
-            label [text "Hello"]
         ]|> Doc.RunById "main"

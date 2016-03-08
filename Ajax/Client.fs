@@ -23,7 +23,7 @@ module Client =
                 new SeriesColor("Tokyo", "#6060c0")
             |]
 
-        let Place = Doc.Element "div" [attr.id "diagram"] [Doc.Empty]
+        let Place = divAttr [attr.id "diagram"] [Doc.Empty]
 
         let GData = FileConfig(Place.Dom, "data.json", Renderer="line", Width=400, Height=200, OnData = Fun, Series=Color) 
 

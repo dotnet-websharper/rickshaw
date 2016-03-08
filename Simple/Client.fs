@@ -17,7 +17,7 @@ module Client =
                                                                                                    
         let Series2 = Series( [|Coord(0,19); Coord(1,22); Coord(2,32); Coord(3,20); Coord(4,21)|], Color = "lightblue")
 
-        let Chart = Doc.Element "div" [attr.id "diagram"] [Doc.Empty]
+        let Chart = divAttr [attr.id "diagram"] [Doc.Empty]
 
         let GData = GraphData(Chart.Dom, [|Series1; Series2|], Renderer="line") 
 
