@@ -6,7 +6,7 @@ open WebSharper.JQuery
 open WebSharper.UI.Next
 open WebSharper.UI.Next.Html
 open WebSharper.UI.Next.Client
-open Websharper.Rickshaw
+open WebSharper.Rickshaw
 
 [<JavaScript>]
 module Client =    
@@ -14,28 +14,28 @@ module Client =
 
     let Main =
         
-        let SeriesData = [| [| |]; [| |]; [| |] |] : (Coord []) []
+        let seriesdata = [| [| |]; [| |]; [| |] |] : (Coord []) []
 
-        let RanData = Rickshaw.Fixtures.RandomData(150)
+        let randata = Rickshaw.Fixtures.RandomData(150)
         
         for i=1 to 70 do
-                RanData.AddData(SeriesData)
+                randata.AddData(seriesdata)
 
-        let Place = divAttr [attr.id "diagram"] [Doc.Empty]
+        let diagram = divAttr [attr.id "diagram"] []
 
-        let D =
+        let data =
             [|
-                Series(SeriesData.[0], Color = "#c05020")
-                Series(SeriesData.[1], Color = "#30c020")
-                Series(SeriesData.[2], Color = "#6060c0")
+                Series(seriesdata.[0], Color = "#c05020")
+                Series(seriesdata.[1], Color = "#30c020")
+                Series(seriesdata.[2], Color = "#6060c0")
             |]
 
-        let GData = GraphData(Place.Dom, D, Renderer="bar", Width=960, Height=500) 
+        let graphdata = GraphData(diagram.Dom, data, Renderer="bar", Width=960, Height=500) 
 
-        let Test = Rickshaw.Graph(GData)
+        let graph = Rickshaw.Graph(graphdata)
 
-        Test.Render()
+        graph.Render()
 
         div [
-            Place
+            diagram
         ]|> Doc.RunById "main"
