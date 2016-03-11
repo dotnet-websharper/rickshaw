@@ -15,16 +15,16 @@ This extension works in modern browsers and Internet Explorer 9+.
 Here is an example how to create a simple chart:
 
 ```
-let Series1 = Series( [|Coord(0,40); Coord(1,49); Coord(2,38); Coord(3,30); Coord(4,32)|], Color = "steelblue"
-let Series2 = Series( [|Coord(0,19); Coord(1,22); Coord(2,32); Coord(3,20); Coord(4,21)|], Color = "lightblue")
-let Chart = divAttr [attr.id "diagram"] [Doc.Empty]
-let GData = GraphData(Chart.Dom, [|Series1; Series2|], Renderer="line") 
-let Test = Rickshaw.Graph(GData)
-Test.Render()
+let series1 = Series( [|Coord(0,40); Coord(1,49); Coord(2,38); Coord(3,30); Coord(4,32)|], Color = "steelblue"
+let series2 = Series( [|Coord(0,19); Coord(1,22); Coord(2,32); Coord(3,20); Coord(4,21)|], Color = "lightblue")
+let chart = divAttr [attr.id "diagram"] []
+let gdata = GraphData(Chart.Dom, [|series1; series2|], Renderer="line") 
+let test = Rickshaw.Graph(GData)
+test.Render()
 ```
-`Rickshaw.Graph` takes a GraphData as an argument which can be constructed as GData above. Required parameter is the DOM element, where the graph should be rendered, and the array of datas, and it can take a lot of additional options, such as the rendering shape, as it's shown above.
+`Rickshaw.Graph` takes a GraphData as an argument which can be constructed as gdata above. Required parameter is the DOM element, where the graph should be rendered, and the array of datas, and it can take a lot of additional options, such as the rendering shape, as it's shown above.
 
-Series1 and Series2, which holds the data, is constructed by `Series`, which takes a list of `Coord`s (which needs an integer as an x coordinate, and a float or and integer as an y coordinate) as a must-have argument, and additionally you can set the color, the name and the scale of this data. To render the graph, just call the created graph's render method.
+series1 and series2, which holds the data, is constructed by `Series`, which takes a list of `Coord`s (which needs an integer as an x coordinate, and a float or and integer as an y coordinate) as a must-have argument, and additionally you can set the color, the name and the scale of this data. To render the graph, just call the created graph's render method.
 
 Optional GraphData features
 
@@ -62,20 +62,20 @@ There are predefined colorschemes in this extension:
 
 Here is an example to how to use them.
 ```
-let Palette = Rickshaw.Color.Palette(Scheme("colorwheel"))
+let palette = Rickshaw.Color.Palette(Scheme("colorwheel"))
 ```
-Now Palette will be a color palette object, which holds the colors of this scheme. To get a color from this scheme, use `Palette.Colors()`, which returns with the color as a string. This will also remove that color from Palette, so when you call it next time, you will not get the same color again.
+Now palette will be a color palette object, which holds the colors of this scheme. To get a color from this scheme, use `palette.Colors()`, which returns with the color as a string. This will also remove that color from palette, so when you call it next time, you will not get the same color again.
 
 ## Adding a legend
 
 Creating a legend is just as simple as creating a graph:
 
 ```
-let Leg = divAttr [attr.id "legend"] []
-let GraphLegend = Rickshaw.Graph.Legend(Legend(Graph, Leg.Dom))
-let Toggle = Rickshaw.Graph.Behaviour.Series.Toggle(GLegend(Graph, GraphLegend))
-let Order = Rickshaw.Graph.Behaviour.Series.Order(GLegend(Graph, GraphLegend))
-let Highlight = Rickshaw.Graph.Behaviour.Series.Highlight(GLegend(Graph, GraphLegend))
+let leg = divAttr [attr.id "legend"] []
+let graphlegend = Rickshaw.Graph.Legend(Legend(graph, leg.Dom))
+let toggle = Rickshaw.Graph.Behaviour.Series.Toggle(GLegend(graph, graphlegend))
+let order = Rickshaw.Graph.Behaviour.Series.Order(GLegend(graph, graphlegend))
+let highlight = Rickshaw.Graph.Behaviour.Series.Highlight(GLegend(graph, graphlegend))
 ```
 
 To create a legend, you need to use `Rickshaw.Graph.Legend`, and pass it a Legend constructed data, as an argument. Legend takes two parameters. First parameter is the chart object, which to the legend will be attached, the second is the DOM elemet, where it will be created.
@@ -89,26 +89,26 @@ Theese three features can be created within the `Rickshaw.Graph.Series.Behaviour
 Let's see an example of hover details
 
 ```
-let XFormat = 
+let xformat = 
     fun x ->
         Date( x*1000 ).ToDateString()
         
- let HoverDetail = Rickshaw.Graph.HoverDetail(Hover(Graph, XFormatter=XFormat))
+ let HoverDetail = Rickshaw.Graph.HoverDetail(Hover(graph, XFormatter=xformat))
 ```
 
 When using `Rickshaw.Graph.HoverDetail`, just pass an Hover constructed object as an argument. It's required parameter is the chart object, and you can provide optional parameters, like XFormatter, and YFormatter which are int to string functions, or the formatter function, which takes an (object, int, int) to string function.
 
 ```
-let Annotator = Rickshaw.Graph.Annotate(Legend(Graph, TimeLine.Dom))
-Annotator.Add(5, "Hello")
-Annotator.Update()
+let annotator = Rickshaw.Graph.Annotate(Legend(graph, timeline.Dom))
+annotator.Add(5, "Hello")
+annotator.Update()
 ```
 
 The example above creates a timeline for your chart. This takes the same argument as the legend needed, so pass it a `Legend` constructed argument. To add message to the timeline, call the Add method of your `Annotate` object, and pass it an integer and a string. To show your message on the timeline, you have to call the `Update` method.
 
 ```
-let Smooth = divAttr [attr.id "smoother"] []
-let Smoother = Rickshaw.Graph.Smoother(Legend(Graph, Smooth.Dom))
+let smooth = divAttr [attr.id "smoother"] []
+let smoother = Rickshaw.Graph.Smoother(Legend(graph, smooth.Dom))
 ```
 
 This example creates a slide for your chart, with you can set the frequency of data on the chart with a slider.
@@ -118,8 +118,8 @@ This example creates a slide for your chart, with you can set the frequency of d
 The chart can get the data via JSON or JSONP files.
 
 ```
-let GData = FileConfig(Place.Dom, "data.json", Renderer="line", Width=400, Height=200)
-let Test = Rickshaw.Graph.Ajax(GData)
+let gdata = FileConfig(place.Dom, "data.json", Renderer="line", Width=400, Height=200)
+let test = Rickshaw.Graph.Ajax(gdata)
 ```
 
 This example creates a chart, where the data comes from a file. To create a chart like this, you need to use the `Rickshaw.Graph.Ajax`, which needs a `FileConfig` type as a constructor argument. `FileConfig` requires the DOM element, where the chart will be located, and the source file. An example of the data.json file:
@@ -147,16 +147,16 @@ To create a chart with JSONP, use `Rickshaw.Graph.JSONP` similar way.
 ## Formatting the X and Y axis
 
 ```
-let XA = Rickshaw.Graph.Axis.X(YAxis(Graph, TicksTreatment="glow", TicksFormat=Rickshaw.Fixtures.Number.FormatKMBT))
-XA.Render()
+let xa = Rickshaw.Graph.Axis.X(YAxis(graph, TicksTreatment="glow", TicksFormat=Rickshaw.Fixtures.Number.FormatKMBT))
+xa.Render()
 ```
 ```
-let XAT = Rickshaw.Graph.Axis.Time(XAxis(Graph, TicksTreatment="glow", TimeFixture=Rickshaw.Fixtures.Time.Local()))
-XAT.Render()
+let xat = Rickshaw.Graph.Axis.Time(XAxis(graph, TicksTreatment="glow", TimeFixture=Rickshaw.Fixtures.Time.Local()))
+xat.Render()
 ```
 ```
-let YA = Rickshaw.Graph.Axis.Y(YAxis(Graph, TicksTreatment="glow", TicksFormat=Rickshaw.Fixtures.Number.FormatKMBT))
-YA.Render()
+let ya = Rickshaw.Graph.Axis.Y(YAxis(yraph, TicksTreatment="glow", TicksFormat=Rickshaw.Fixtures.Number.FormatKMBT))
+ya.Render()
 ```
 
 Two types of X axis exists, there is a number based, and there is a time based. To create a number based, use the `Rickshaw.Graph.Axis.X`, to create a time based, use the `Rickshaw.Graph.Axis.Time`.
@@ -176,16 +176,16 @@ The time based axis can use the `Rickshaw.Fixtures.Time()`, or the `Rickshaw.Fix
 ## Using random data
 
 ```
-let Place = divAttr [attr.id "diagram"] [Doc.Empty]
-let Ser = Rickshaw.Series.FixedDuration([|FixDurArr("one")|], JS.Undefined, FixDurObj(250, 100, Date().GetTime()/1000))
-let Graph = Rickshaw.Graph(GraphData(Place.Dom,Ser,Width=900,Height=500,Renderer="line"))
+let place = divAttr [attr.id "diagram"] []
+let series = Rickshaw.Series.FixedDuration([|FixDurArr("one")|], JS.Undefined, FixDurObj(250, 100, Date().GetTime()/1000))
+let graph = Rickshaw.Graph(GraphData(Place.Dom,series,Width=900,Height=500,Renderer="line"))
 ```
 
 You can pass a `Rickshaw.Series.FixedDuration` object to a Graph, as instead of a Series object. This needs an array of `FixedDurArr`-s (which needs a string as an argument, which defines the name of that data), a string, which defines the color palette (you can use `JS.Undefined`, if you don't want to pass a colorscheme) and a `FixDurObj` which takes 3 int as a parameter (time interval, max data points and time base). To add data to this object, let's see this example:
 
 ```
 let mutable I = 0.
-JS.SetInterval( (function () ->
+JS.SetInterval( (fun () ->
         let randInt = Math.Random()*100.
         I <- (I + 1.)
         let data = New [
@@ -193,9 +193,9 @@ JS.SetInterval( (function () ->
             "two" => (Math.Sin( I / 40.) + 4.) * (randInt + 400.)
             "three" => randInt + 300.
         ]
-        Ser.AddData(data)
-        Graph.Update() 
-    )) <| 250 |> ignore
+        series.AddData(data)
+        graph.Update() 
+    )) 250 |> ignore
 ```
 
 You can add data with the `AddData` function, which requires an object as a parameter. Just pass an anonym object, which can be the constructed with the `New` keyword. This takes a list, where the property names will be the name of each line, and the given values will be the y values of the chart. After adding data, update the graph to render.
