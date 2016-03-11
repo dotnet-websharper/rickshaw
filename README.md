@@ -4,8 +4,6 @@
 
 (The following is the introduction from [code.shutterstock.com][rickshaw] with samples translated to F#, and some comments on typing.)
 
-Rickshaw allows you to create a chart to a Document Object Model (DOM), and then apply different options to this chart. 
-
 Rickshaw is a handy tool, which allow you to create static and dynamic charts to a Document Object Model (DOM), which are actually well customisable. Rickshaw is based on the [D3][d3] library, and uses the [jQuery-ui][jqueryui] library.
 
 This extension works in modern browsers and Internet Explorer 9+.
