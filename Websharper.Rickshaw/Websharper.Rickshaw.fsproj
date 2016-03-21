@@ -6,9 +6,9 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{1ab05e65-8c63-4cfa-8291-33dbadd4c7b6}</ProjectGuid>
     <WebSharperProject>InterfaceGenerator</WebSharperProject>
-    <Name>Websharper.Rickshaw</Name>
-    <RootNamespace>Websharper.Rickshaw</RootNamespace>
-    <AssemblyName>Websharper.Rickshaw</AssemblyName>
+    <Name>WebSharper.Rickshaw</Name>
+    <RootNamespace>WebSharper.Rickshaw</RootNamespace>
+    <AssemblyName>WebSharper.Rickshaw</AssemblyName>
     <TargetFSharpCoreVersion>4.4.0.0</TargetFSharpCoreVersion>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>

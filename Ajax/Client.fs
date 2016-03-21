@@ -6,29 +6,29 @@ open WebSharper.JQuery
 open WebSharper.UI.Next
 open WebSharper.UI.Next.Html
 open WebSharper.UI.Next.Client
-open Websharper.Rickshaw
+open WebSharper.Rickshaw
 
 [<JavaScript>]
 module Client =
 
-    let Fun =
+    let id =
             fun d -> d
 
     let Main =
         
-        let Color = 
+        let color = 
             [|
                 new SeriesColor("New York", "#c05020")
                 new SeriesColor("London", "#30c020")
                 new SeriesColor("Tokyo", "#6060c0")
             |]
 
-        let Place = Doc.Element "div" [attr.id "diagram"] [Doc.Empty]
+        let diagram = divAttr [attr.id "diagram"] []
 
-        let GData = FileConfig(Place.Dom, "data.json", Renderer="line", Width=400, Height=200, OnData = Fun, Series=Color) 
+        let graphdata = FileConfig(diagram.Dom, "data.json", Renderer="line", Width=400, Height=200, OnData = id, Series=color) 
 
-        let Test = Rickshaw.Graph.Ajax(GData)
+        let graph = Rickshaw.Graph.Ajax(graphdata)
 
         div [
-            Place
+            diagram
         ]|> Doc.RunById "main"

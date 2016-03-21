@@ -6,79 +6,79 @@ open WebSharper.JQuery
 open WebSharper.UI.Next
 open WebSharper.UI.Next.Html
 open WebSharper.UI.Next.Client
-open Websharper.Rickshaw
+open WebSharper.Rickshaw
 
 [<JavaScript>]
 module Client =    
     
     let Main =
-        let SeriesData = [| |] : (Coord []) []
+        let seriesdata = [| |] : (Coord []) []
 
         for i=1 to 9 do
-            SeriesData.JS.Push([| |] :Coord []) |> ignore
+            seriesdata.JS.Push([| |] :Coord []) |> ignore
         
-        let RanData = Rickshaw.Fixtures.RandomData(150)
+        let randata = Rickshaw.Fixtures.RandomData(150)
         
         for i=1 to 70 do
-                RanData.AddData(SeriesData)
+                randata.AddData(seriesdata)
 
-        let Palette = Rickshaw.Color.Palette(Scheme("classic9"))
+        let palette = Rickshaw.Color.Palette(Scheme("classic9"))
 
-        let Place = Doc.Element "div" [attr.id "diagram"] [Doc.Empty]
+        let diagram = divAttr [attr.id "diagram"] []
 
-        let Series = 
+        let series = 
             [|
-                Series(SeriesData.[0], Color = Palette.Color(), Name = "Moscow")
-                Series(SeriesData.[1], Color = Palette.Color(), Name = "Shanghai")
-                Series(SeriesData.[2], Color = Palette.Color(), Name = "Amsterdam")
-                Series(SeriesData.[3], Color = Palette.Color(), Name = "Paris")
-                Series(SeriesData.[4], Color = Palette.Color(), Name = "Tokyo")
-                Series(SeriesData.[5], Color = Palette.Color(), Name = "London")
-                Series(SeriesData.[6], Color = Palette.Color(), Name = "New York")
+                Series(seriesdata.[0], Color = palette.Color(), Name = "Moscow")
+                Series(seriesdata.[1], Color = palette.Color(), Name = "Shanghai")
+                Series(seriesdata.[2], Color = palette.Color(), Name = "Amsterdam")
+                Series(seriesdata.[3], Color = palette.Color(), Name = "Paris")
+                Series(seriesdata.[4], Color = palette.Color(), Name = "Tokyo")
+                Series(seriesdata.[5], Color = palette.Color(), Name = "London")
+                Series(seriesdata.[6], Color = palette.Color(), Name = "New York")
             |]
 
-        let Graph = Rickshaw.Graph(GraphData(Place.Dom, Series, Width=900, Height=500, Renderer="area", Stroke=true, Preserve=true))
+        let graph = Rickshaw.Graph(GraphData(diagram.Dom, series, Width=900, Height=500, Renderer="area", Stroke=true, Preserve=true))
 
-        Graph.Render()
+        graph.Render()
 
-        let Prev = Doc.Element "div" [attr.id "preview"] [Doc.Empty]
+        let preview = divAttr [attr.id "preview"] []
 
-        let Range = Rickshaw.Graph.RangeSlider.Preview(Slider(Prev.Dom,Graph))
+        let range = Rickshaw.Graph.RangeSlider.Preview(Slider(preview.Dom,graph))
 
-        let XFormat = 
+        let xformat = 
             fun x ->
                 Date( x*1000 ).ToDateString()
        
-        let HoverDetail = Rickshaw.Graph.HoverDetail(Hover(Graph, XFormatter=XFormat))
+        let hoverdetail = Rickshaw.Graph.HoverDetail(Hover(graph, XFormatter=xformat))
 
-        let TimeLine = Doc.Element "div" [attr.id "timeline"] [Doc.Empty]
+        let timeline = divAttr [attr.id "timeline"] []
         
-        let Annotator = Rickshaw.Graph.Annotate(Legend(Graph, TimeLine.Dom))
+        let annotator = Rickshaw.Graph.Annotate(Legend(graph, timeline.Dom))
 
-        let Leg = Doc.Element "div" [attr.id "legend"] []
+        let leg = divAttr [attr.id "legend"] []
 
-        let GraphLegend = Rickshaw.Graph.Legend(Legend(Graph, Leg.Dom))
+        let graphlegend = Rickshaw.Graph.Legend(Legend(graph, leg.Dom))
 
-        let Toggle = Rickshaw.Graph.Behaviour.Series.Toggle(GLegend(Graph, GraphLegend))
+        let toggle = Rickshaw.Graph.Behaviour.Series.Toggle(GLegend(graph, graphlegend))
 
-        let Order = Rickshaw.Graph.Behaviour.Series.Order(GLegend(Graph, GraphLegend))
+        let order = Rickshaw.Graph.Behaviour.Series.Order(GLegend(graph, graphlegend))
 
-        let Highlight = Rickshaw.Graph.Behaviour.Series.Highlight(GLegend(Graph, GraphLegend))
+        let highlight = Rickshaw.Graph.Behaviour.Series.Highlight(GLegend(graph, graphlegend))
 
-        let Smooth = Doc.Element "div" [attr.id "smoother"] []
+        let smooth = divAttr [attr.id "smoother"] []
 
-        let Smoother = Rickshaw.Graph.Smoother(Legend(Graph, Smooth.Dom))
+        let smoother = Rickshaw.Graph.Smoother(Legend(graph, smooth.Dom))
 
-        let XA = Rickshaw.Graph.Axis.Time(TimeAxis(Graph, TicksTreatment="glow", TimeFixture=Rickshaw.Fixtures.Time.Local()))
+        let xa = Rickshaw.Graph.Axis.Time(TimeAxis(graph, TicksTreatment="glow", TimeFixture=Rickshaw.Fixtures.Time.Local()))
 
-        XA.Render()
+        xa.Render()
 
-        let YA = Rickshaw.Graph.Axis.Y(Axis(Graph, TicksTreatment="glow", TicksFormat=Rickshaw.Fixtures.Number.FormatKMBT))
+        let ya = Rickshaw.Graph.Axis.Y(Axis(graph, TicksTreatment="glow", TicksFormat=Rickshaw.Fixtures.Number.FormatKMBT))
 
-        YA.Render()
+        ya.Render()
 
         
-        let Messages = 
+        let messages = 
             [|
                 "Changed home page welcome message"
                 "Minified JS and CSS"
@@ -91,69 +91,66 @@ module Client =
             |]
 
         JS.SetInterval(
-            (function () -> 
-                RanData.RemoveData(SeriesData)
-                RanData.AddData(SeriesData)
-                Graph.Update()
-            )) <| 3000 |> ignore
+            (fun () -> 
+                randata.RemoveData(seriesdata)
+                randata.AddData(seriesdata)
+                graph.Update()
+            )) 3000 |> ignore
 
-        let AddAnnotation =
+        let addannotation =
             function force ->
-                if Array.length Messages > 0 && (force || Math.Random() >= 0.95) then
-                    Annotator.Add(SeriesData.[2].[Array.length SeriesData.[2]-1].X, Messages.JS.Shift())
-                    Annotator.Update()
+                if Array.length messages > 0 && (force || Math.Random() >= 0.95) then
+                    annotator.Add(seriesdata.[2].[Array.length seriesdata.[2]-1].X, messages.JS.Shift())
+                    annotator.Update()
 
-        AddAnnotation(true)
+        addannotation(true)
 
          
         JS.SetTimeout((function () ->
-            JS.SetInterval(function () -> AddAnnotation(false)) <| 6000 |> ignore
+            JS.SetInterval(function () -> addannotation(false)) 6000 |> ignore
             )) |> ignore
             
 
-        let PrevXA = Rickshaw.Graph.Axis.Time(TimeAxis(Range.Previews.[0], TicksTreatment="glow", TimeFixture=Rickshaw.Fixtures.Time.Local()))
+        let prevxa = Rickshaw.Graph.Axis.Time(TimeAxis(range.Previews.[0], TicksTreatment="glow", TimeFixture=Rickshaw.Fixtures.Time.Local()))
         
-        PrevXA.Render()
+        prevxa.Render()
         
-        let Form = 
-            Doc.Element
-                "div"
+        let form = 
+            divAttr
                 [
                     attr.id "side-panel"
                     attr.style "float: left"
                 ]
                 [
-                    Leg
-                    Smooth
+                    leg
+                    smooth
                 ]
 
-        let Chart =
-            Doc.Element
-                "div"
+        let chart =
+            divAttr
                 [
                     attr.style "float: left; margin: 10px"
                 ]
                 [
-                    Place
-                    TimeLine
-                    Prev
+                    diagram
+                    timeline
+                    preview
                 ]
 
 
-        let Content =
-            Doc.Element
-                "div"
+        let content =
+            divAttr
                 [
                     attr.id "content"
                     attr.style "float: left"
                 ]
                 [] 
 
-        Content.Dom.AppendChild (Chart.Dom) |> ignore
-        Content.Dom.AppendChild (Form.Dom) |> ignore
+        content.Dom.AppendChild (chart.Dom) |> ignore
+        content.Dom.AppendChild (form.Dom) |> ignore
         
 
-        Doc.RunById "main" Content
+        Doc.RunById "main" content
         
 
         
