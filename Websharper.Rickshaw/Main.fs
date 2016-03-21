@@ -1,4 +1,4 @@
-namespace Websharper.Rickshaw
+namespace WebSharper.Rickshaw
 
 open WebSharper
 open WebSharper.JavaScript
@@ -480,8 +480,8 @@ module Definition =
 
     let RickshawAssembly =
         Assembly [
-            Namespace "Websharper.Rickshaw" classList
-            Namespace "Websharper.Rickshaw.Resources" [
+            Namespace "WebSharper.Rickshaw" classList
+            Namespace "WebSharper.Rickshaw.Resources" [
                 (Resource "Rickshaw" "https://cdnjs.cloudflare.com/ajax/libs/rickshaw/1.5.1/rickshaw.js").AssemblyWide()
                 (Resource "RickshawCss" "https://cdnjs.cloudflare.com/ajax/libs/rickshaw/1.5.1/rickshaw.css").AssemblyWide()
                 (Resource "D3" "https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.16/d3.min.js").AssemblyWide()

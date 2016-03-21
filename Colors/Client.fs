@@ -6,14 +6,14 @@ open WebSharper.JQuery
 open WebSharper.UI.Next
 open WebSharper.UI.Next.Html
 open WebSharper.UI.Next.Client
-open Websharper.Rickshaw
+open WebSharper.Rickshaw
 
 [<JavaScript>]
 module Client =    
 
     let Main =
         
-        let Schemes = 
+        let schemes = 
             [
                 "spectrum14"
                 "colorwheel"
@@ -24,60 +24,51 @@ module Client =
                 "munin"
             ]
 
-        let Ldiv =
+        let ldiv =
             div []
 
-        let Fun = fun d ->
-            let Palette = Rickshaw.Color.Palette(Scheme(d))
+        let fund = fun d ->
+            let palette = Rickshaw.Color.Palette(Scheme(d))
             
-            let SeriesData = [| |] : (Coord []) []
+            let seriesdata = [| |] : (Coord []) []
 
             Array.map (function _ ->
-                SeriesData.JS.Push([| |]: Coord []) |> ignore
-            ) Palette.Scheme |> ignore
+                seriesdata.JS.Push([| |]: Coord []) |> ignore
+            ) palette.Scheme |> ignore
 
-//            Palette.Scheme.JS.ForEach( function (_,_,_) ->
-//                SeriesData.JS.Push([| |]: Coord []) > -1
-//            ) |> ignore
-
-//            List.map (fun a -> SeriesData.JS.Push([| |]: Coord [])) Schemes |> ignore
-
-            let RanData = Rickshaw.Fixtures.RandomData(150)
+            let randata = Rickshaw.Fixtures.RandomData(150)
         
             for i=1 to 70 do
-                RanData.AddData(SeriesData)
+                randata.AddData(seriesdata)
+            
                 
-            let Elem = Doc.Element "div" [] [Doc.Empty]
-            let Caption = Doc.Element "span" [] [ text d ]
-            let Section = 
-                Doc.Element 
-                    "section" 
+            let elem = divAttr [] []
+            let caption = spanAttr [] [ text d ]
+            let section = 
+                sectionAttr 
                     [
                         attr.width "300px"
                         attr.height "250px"
                         attr.style "float: left; margin: 16px"
                     ] 
                     [
-                        Elem
-                        Caption
+                        elem
+                        caption
                     ]
 
-            Ldiv.Dom.AppendChild(Section.Dom) |> ignore
+            ldiv.Dom.AppendChild(section.Dom) |> ignore
 
-            let Serie = [| |] : Series []
-
+            let series = [| |] : Series []
 
             Array.map (fun x ->
-                    Serie.JS.Push(Series(x,Color = Palette.Color())) |> ignore
-            ) SeriesData |> ignore
+                    series.JS.Push(Series(x,Color = palette.Color())) |> ignore
+            ) seriesdata |> ignore
 
-            let Graph = Rickshaw.Graph(GraphData(Elem.Dom, Serie, Width=300, Height=200))
+            let graph = Rickshaw.Graph(GraphData(elem.Dom, series, Width=300, Height=200))
 
-            Graph.Render()
-
-            Console.Log(d)
+            graph.Render()
 
 
-        List.map Fun Schemes |> ignore
+        List.map fund schemes |> ignore
 
-        Doc.RunById "main" Ldiv
+        Doc.RunById "main" ldiv
