@@ -482,10 +482,10 @@ module Definition =
         Assembly [
             Namespace "WebSharper.Rickshaw" classList
             Namespace "WebSharper.Rickshaw.Resources" [
-                (Resource "Rickshaw" "https://cdnjs.cloudflare.com/ajax/libs/rickshaw/1.5.1/rickshaw.js").AssemblyWide()
+                (Resource "Rickshaw" "https://cdnjs.cloudflare.com/ajax/libs/rickshaw/1.5.1/rickshaw.js" |> RequiresExternal [ T<WebSharper.JQuery.Resources.JQuery> ]).AssemblyWide()
                 (Resource "RickshawCss" "https://cdnjs.cloudflare.com/ajax/libs/rickshaw/1.5.1/rickshaw.css").AssemblyWide()
                 (Resource "D3" "https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.16/d3.min.js").AssemblyWide()
-                (Resource "jQuery.ui" "https://code.jquery.com/ui/1.11.3/jquery-ui.min.js").AssemblyWide()
+                (Resource "jQuery.ui" "https://code.jquery.com/ui/1.11.3/jquery-ui.min.js" |> RequiresExternal [ T<WebSharper.JQuery.Resources.JQuery> ]).AssemblyWide()
                 (Resource "jQuery-ui-css" "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css").AssemblyWide()
             ]
             
