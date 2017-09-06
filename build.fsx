@@ -2,7 +2,7 @@
 open IntelliFactory.Build
 
 let bt = BuildTool().PackageId("WebSharper.Rickshaw")
-            .VersionFrom("WebSharper")
+            .VersionFrom("WebSharper", versionSpec = "(,4.0)")
             .WithFSharpVersion(FSharp30)
             .WithFramework(fun fw -> fw.Net40)
 
@@ -15,7 +15,7 @@ let simple =
         .SourcesFromProject()
         .References(fun r ->
             [
-                r.NuGet("WebSharper.UI.Next").Reference()
+                r.NuGet("WebSharper.UI.Next").Version("(,4.0)").Reference()
                 r.Project(main)
             ])
 
@@ -24,7 +24,7 @@ let ajax =
         .SourcesFromProject()
         .References(fun r ->
             [
-                r.NuGet("WebSharper.UI.Next").Reference()
+                r.NuGet("WebSharper.UI.Next").Version("(,4.0)").Reference()
                 r.Project(main)
             ])
 
@@ -33,7 +33,7 @@ let bars =
         .SourcesFromProject()
         .References(fun r ->
             [
-                r.NuGet("WebSharper.UI.Next").Reference()
+                r.NuGet("WebSharper.UI.Next").Version("(,4.0)").Reference()
                 r.Project(main)
             ])
 
@@ -42,7 +42,7 @@ let colors =
         .SourcesFromProject()
         .References(fun r ->
             [
-                r.NuGet("WebSharper.UI.Next").Reference()
+                r.NuGet("WebSharper.UI.Next").Version("(,4.0)").Reference()
                 r.Project(main)
             ])
 
@@ -51,7 +51,7 @@ let extensions =
         .SourcesFromProject()
         .References(fun r ->
             [
-                r.NuGet("WebSharper.UI.Next").Reference()
+                r.NuGet("WebSharper.UI.Next").Version("(,4.0)").Reference()
                 r.Project(main)
             ])
 
@@ -60,7 +60,7 @@ let fixedduration =
         .SourcesFromProject()
         .References(fun r ->
             [
-                r.NuGet("WebSharper.UI.Next").Reference()
+                r.NuGet("WebSharper.UI.Next").Version("(,4.0)").Reference()
                 r.Project(main)
             ])
 
