@@ -1,67 +1,67 @@
 #load "tools/includes.fsx"
 open IntelliFactory.Build
 
-let bt = BuildTool().PackageId("Zafir.Rickshaw")
-            .VersionFrom("Zafir")
+let bt = BuildTool().PackageId("WebSharper.Rickshaw")
+            .VersionFrom("WebSharper")
             .WithFSharpVersion(FSharp30)
             .WithFramework(fun fw -> fw.Net40)
 
 let main = 
-    bt.Zafir.Extension("WebSharper.Rickshaw")
+    bt.WebSharper4.Extension("WebSharper.Rickshaw")
         .SourcesFromProject()
 
 (*
 let simple = 
-    bt.Zafir.BundleWebsite("Simple")
+    bt.WebSharper4.BundleWebsite("Simple")
         .SourcesFromProject()
         .References(fun r ->
             [
-                r.NuGet("Zafir.UI.Next").Latest(true).Reference()
+                r.NuGet("WebSharper.UI.Next").Latest(true).Reference()
                 r.Project(main)
             ])
 
 let ajax = 
-    bt.Zafir.BundleWebsite("Ajax")
+    bt.WebSharper4.BundleWebsite("Ajax")
         .SourcesFromProject()
         .References(fun r ->
             [
-                r.NuGet("Zafir.UI.Next").Latest(true).Reference()
+                r.NuGet("WebSharper.UI.Next").Latest(true).Reference()
                 r.Project(main)
             ])
 
 let bars = 
-    bt.Zafir.BundleWebsite("Bars")
+    bt.WebSharper4.BundleWebsite("Bars")
         .SourcesFromProject()
         .References(fun r ->
             [
-                r.NuGet("Zafir.UI.Next").Latest(true).Reference()
+                r.NuGet("WebSharper.UI.Next").Latest(true).Reference()
                 r.Project(main)
             ])
 
 let colors = 
-    bt.Zafir.BundleWebsite("Colors")
+    bt.WebSharper4.BundleWebsite("Colors")
         .SourcesFromProject()
         .References(fun r ->
             [
-                r.NuGet("Zafir.UI.Next").Latest(true).Reference()
+                r.NuGet("WebSharper.UI.Next").Latest(true).Reference()
                 r.Project(main)
             ])
 
 let extensions = 
-    bt.Zafir.BundleWebsite("Extensions")
+    bt.WebSharper4.BundleWebsite("Extensions")
         .SourcesFromProject()
         .References(fun r ->
             [
-                r.NuGet("Zafir.UI.Next").Latest(true).Reference()
+                r.NuGet("WebSharper.UI.Next").Latest(true).Reference()
                 r.Project(main)
             ])
 
 let fixedduration = 
-    bt.Zafir.BundleWebsite("FixedDuration")
+    bt.WebSharper4.BundleWebsite("FixedDuration")
         .SourcesFromProject()
         .References(fun r ->
             [
-                r.NuGet("Zafir.UI.Next").Latest(true).Reference()
+                r.NuGet("WebSharper.UI.Next").Latest(true).Reference()
                 r.Project(main)
             ])
 *)
