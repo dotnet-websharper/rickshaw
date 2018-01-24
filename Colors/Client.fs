@@ -3,15 +3,16 @@ namespace Colors
 open WebSharper
 open WebSharper.JavaScript
 open WebSharper.JQuery
-open WebSharper.UI.Next
-open WebSharper.UI.Next.Html
-open WebSharper.UI.Next.Client
+open WebSharper.UI
+open WebSharper.UI.Html
+open WebSharper.UI.Client
 open WebSharper.Rickshaw
 
 [<JavaScript>]
 module Client =    
 
-    let Main =
+    [<SPAEntryPoint>]
+    let Main() =
         
         let schemes = 
             [
@@ -25,7 +26,7 @@ module Client =
             ]
 
         let ldiv =
-            div []
+            div [] []
 
         let fund = fun d ->
             let palette = Rickshaw.Color.Palette(Scheme(d))
@@ -42,10 +43,10 @@ module Client =
                 randata.AddData(seriesdata)
             
                 
-            let elem = divAttr [] []
-            let caption = spanAttr [] [ text d ]
+            let elem = div [] []
+            let caption = span [] [ text d ]
             let section = 
-                sectionAttr 
+                section
                     [
                         attr.width "300px"
                         attr.height "250px"

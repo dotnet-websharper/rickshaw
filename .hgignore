@@ -1,6 +1,11 @@
+syntax: glob
 bin/
 obj/
 .vs/
 Content/
 packages/
 build/
+.fake/
+paket-files/
+.vscode/
+nuget/*.paket.template

@@ -3,20 +3,22 @@ namespace FixedDuration
 open WebSharper
 open WebSharper.JavaScript
 open WebSharper.JQuery
-open WebSharper.UI.Next
-open WebSharper.UI.Next.Html
-open WebSharper.UI.Next.Client
+open WebSharper.UI
+open WebSharper.UI.Html
+open WebSharper.UI.Client
 open WebSharper.Rickshaw
 
 [<JavaScript>]
-module Client =    
-    let Main =
+module Client =
 
-        let diagram = divAttr [attr.id "diagram"] []
+    [<SPAEntryPoint>]
+    let Main() =
+
+        let diagram = div [attr.id "diagram"] []
 
         let series = Rickshaw.Series.FixedDuration([|FixDurArr("one")|], JS.Undefined, FixDurObj(250, 100, Date().GetTime()/1000))
 
-        let graph = Rickshaw.Graph(GraphData(diagram.Dom,Series,Width=900,Height=500,Renderer="line"))
+        let graph = Rickshaw.Graph(GraphData(diagram.Dom,series,Width=900,Height=500,Renderer="line"))
 
         graph.Render()
 

@@ -3,18 +3,16 @@ namespace Ajax
 open WebSharper
 open WebSharper.JavaScript
 open WebSharper.JQuery
-open WebSharper.UI.Next
-open WebSharper.UI.Next.Html
-open WebSharper.UI.Next.Client
+open WebSharper.UI
+open WebSharper.UI.Html
+open WebSharper.UI.Client
 open WebSharper.Rickshaw
 
 [<JavaScript>]
 module Client =
 
-    let id =
-            fun d -> d
-
-    let Main =
+    [<SPAEntryPoint>]
+    let Main() =
         
         let color = 
             [|
@@ -23,12 +21,21 @@ module Client =
                 new SeriesColor("Tokyo", "#6060c0")
             |]
 
-        let diagram = divAttr [attr.id "diagram"] []
+        let diagram = div [attr.id "diagram"] []
 
-        let graphdata = FileConfig(diagram.Dom, "data.json", Renderer="line", Width=400, Height=200, OnData = id, Series=color) 
+        let graphdata =
+            FileConfig(
+                diagram.Dom,
+                "data.json",
+                Renderer="line",
+                Width=400,
+                Height=200,
+                OnData = (fun x -> x),
+                Series=color
+            )
 
         let graph = Rickshaw.Graph.Ajax(graphdata)
 
-        div [
+        div [] [
             diagram
         ]|> Doc.RunById "main"
