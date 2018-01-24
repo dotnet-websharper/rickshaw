@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "WebSharper.Rickshaw", "Websharper.Rickshaw\WebSharper.Rickshaw.fsproj", "{1AB05E65-8C63-4CFA-8291-33DBADD4C7B6}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Websharper.Rickshaw", "Websharper.Rickshaw\Websharper.Rickshaw.fsproj", "{1AB05E65-8C63-4CFA-8291-33DBADD4C7B6}"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Bars", "Bars\Bars.fsproj", "{4F673515-9F47-456F-966B-1E1C58D982CF}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -34,8 +34,8 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{1AB05E65-8C63-4CFA-8291-33DBADD4C7B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1AB05E65-8C63-4CFA-8291-33DBADD4C7B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1AB05E65-8C63-4CFA-8291-33DBADD4C7B6}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{1AB05E65-8C63-4CFA-8291-33DBADD4C7B6}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{1AB05E65-8C63-4CFA-8291-33DBADD4C7B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AB05E65-8C63-4CFA-8291-33DBADD4C7B6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4F673515-9F47-456F-966B-1E1C58D982CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4F673515-9F47-456F-966B-1E1C58D982CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4F673515-9F47-456F-966B-1E1C58D982CF}.Release|Any CPU.ActiveCfg = Release|Any CPU

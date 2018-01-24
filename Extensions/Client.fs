@@ -3,15 +3,16 @@ namespace Extensions
 open WebSharper
 open WebSharper.JavaScript
 open WebSharper.JQuery
-open WebSharper.UI.Next
-open WebSharper.UI.Next.Html
-open WebSharper.UI.Next.Client
+open WebSharper.UI
+open WebSharper.UI.Html
+open WebSharper.UI.Client
 open WebSharper.Rickshaw
 
 [<JavaScript>]
 module Client =    
-    
-    let Main =
+
+    [<SPAEntryPoint>]
+    let Main() =
         let seriesdata = [| |] : (Coord []) []
 
         for i=1 to 9 do
@@ -24,7 +25,7 @@ module Client =
 
         let palette = Rickshaw.Color.Palette(Scheme("classic9"))
 
-        let diagram = divAttr [attr.id "diagram"] []
+        let diagram = div [attr.id "diagram"] []
 
         let series = 
             [|
@@ -41,21 +42,17 @@ module Client =
 
         graph.Render()
 
-        let preview = divAttr [attr.id "preview"] []
+        let preview = div [attr.id "preview"] []
 
         let range = Rickshaw.Graph.RangeSlider.Preview(Slider(preview.Dom,graph))
 
-        let xformat = 
-            fun x ->
-                Date( x*1000 ).ToDateString()
-       
-        let hoverdetail = Rickshaw.Graph.HoverDetail(Hover(graph, XFormatter=xformat))
+        let hoverdetail = Rickshaw.Graph.HoverDetail(Hover(graph, XFormatter=fun x -> Date( x*1000 ).ToDateString()))
 
-        let timeline = divAttr [attr.id "timeline"] []
+        let timeline = div [attr.id "timeline"] []
         
         let annotator = Rickshaw.Graph.Annotate(Legend(graph, timeline.Dom))
 
-        let leg = divAttr [attr.id "legend"] []
+        let leg = div [attr.id "legend"] []
 
         let graphlegend = Rickshaw.Graph.Legend(Legend(graph, leg.Dom))
 
@@ -65,7 +62,7 @@ module Client =
 
         let highlight = Rickshaw.Graph.Behaviour.Series.Highlight(GLegend(graph, graphlegend))
 
-        let smooth = divAttr [attr.id "smoother"] []
+        let smooth = div [attr.id "smoother"] []
 
         let smoother = Rickshaw.Graph.Smoother(Legend(graph, smooth.Dom))
 
@@ -116,7 +113,7 @@ module Client =
         prevxa.Render()
         
         let form = 
-            divAttr
+            div
                 [
                     attr.id "side-panel"
                     attr.style "float: left"
@@ -127,7 +124,7 @@ module Client =
                 ]
 
         let chart =
-            divAttr
+            div
                 [
                     attr.style "float: left; margin: 10px"
                 ]
@@ -139,7 +136,7 @@ module Client =
 
 
         let content =
-            divAttr
+            div
                 [
                     attr.id "content"
                     attr.style "float: left"

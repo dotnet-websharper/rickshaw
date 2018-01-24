@@ -3,16 +3,16 @@ namespace Bars
 open WebSharper
 open WebSharper.JavaScript
 open WebSharper.JQuery
-open WebSharper.UI.Next
-open WebSharper.UI.Next.Html
-open WebSharper.UI.Next.Client
+open WebSharper.UI
+open WebSharper.UI.Html
+open WebSharper.UI.Client
 open WebSharper.Rickshaw
 
 [<JavaScript>]
 module Client =    
     
-
-    let Main =
+    [<SPAEntryPoint>]
+    let Main() =
         
         let seriesdata = [| [| |]; [| |]; [| |] |] : (Coord []) []
 
@@ -21,7 +21,7 @@ module Client =
         for i=1 to 70 do
                 randata.AddData(seriesdata)
 
-        let diagram = divAttr [attr.id "diagram"] []
+        let diagram = div [attr.id "diagram"] []
 
         let data =
             [|
@@ -36,6 +36,6 @@ module Client =
 
         graph.Render()
 
-        div [
+        div [] [
             diagram
         ]|> Doc.RunById "main"
