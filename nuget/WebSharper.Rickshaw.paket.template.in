@@ -11,8 +11,8 @@ description
 tags
     Web JavaScript F# C#
 files
-    ../Websharper.Rickshaw/bin/Release/netstandard2.0/WebSharper.Rickshaw.dll ==> lib/net461
-    ../Websharper.Rickshaw/bin/Release/netstandard2.0/WebSharper.Rickshaw.xml ==> lib/net461
+    ../Websharper.Rickshaw/bin/Release/net461/WebSharper.Rickshaw.dll ==> lib/net461
+    ../Websharper.Rickshaw/bin/Release/net461/WebSharper.Rickshaw.xml ==> lib/net461
     ../Websharper.Rickshaw/bin/Release/netstandard2.0/WebSharper.Rickshaw.dll ==> lib/netstandard2.0
     ../Websharper.Rickshaw/bin/Release/netstandard2.0/WebSharper.Rickshaw.xml ==> lib/netstandard2.0
 dependencies
