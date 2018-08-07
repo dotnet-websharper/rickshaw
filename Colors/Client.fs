@@ -26,7 +26,7 @@ module Client =
             ]
 
         let ldiv =
-            div [] []
+            Elt.div [] []
 
         let fund = fun d ->
             let palette = Rickshaw.Color.Palette(Scheme(d))
@@ -43,10 +43,10 @@ module Client =
                 randata.AddData(seriesdata)
             
                 
-            let elem = div [] []
+            let elem = Elt.div [] []
             let caption = span [] [ text d ]
             let section = 
-                section
+                Elt.section
                     [
                         attr.width "300px"
                         attr.height "250px"

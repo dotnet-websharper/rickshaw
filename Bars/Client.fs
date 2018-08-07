@@ -21,7 +21,7 @@ module Client =
         for i=1 to 70 do
                 randata.AddData(seriesdata)
 
-        let diagram = div [attr.id "diagram"] []
+        let diagram = Elt.div [attr.id "diagram"] []
 
         let data =
             [|

@@ -18,17 +18,18 @@ module Client =
                                                                                                    
         let series2 = Series( [|Coord(0,19); Coord(1,22); Coord(2,32); Coord(3,20); Coord(4,21)|], Color = "lightblue")
 
-        let diagram = div [attr.id "diagram"] []
+        div [
+            attr.id "diagram"
+            on.afterRender (fun diagram ->
+                let graphdata = GraphData(diagram, [|series1; series2|], Renderer="line") 
 
-        let graphdata = GraphData(diagram.Dom, [|series1; series2|], Renderer="line") 
+                let test = Rickshaw.Graph(graphdata)
 
-        let test = Rickshaw.Graph(graphdata)
+                test.Render()
+            )
+        ] []
 
-        test.Render()
-
-        div [] [
-            diagram
-        ]|> Doc.RunById "main"
+        |> Doc.RunById "main"
          
 
        

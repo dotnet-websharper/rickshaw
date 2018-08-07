@@ -25,7 +25,7 @@ module Client =
 
         let palette = Rickshaw.Color.Palette(Scheme("classic9"))
 
-        let diagram = div [attr.id "diagram"] []
+        let diagram = Elt.div [attr.id "diagram"] []
 
         let series = 
             [|
@@ -42,17 +42,17 @@ module Client =
 
         graph.Render()
 
-        let preview = div [attr.id "preview"] []
+        let preview = Elt.div [attr.id "preview"] []
 
         let range = Rickshaw.Graph.RangeSlider.Preview(Slider(preview.Dom,graph))
 
         let hoverdetail = Rickshaw.Graph.HoverDetail(Hover(graph, XFormatter=fun x -> Date( x*1000 ).ToDateString()))
 
-        let timeline = div [attr.id "timeline"] []
+        let timeline = Elt.div [attr.id "timeline"] []
         
         let annotator = Rickshaw.Graph.Annotate(Legend(graph, timeline.Dom))
 
-        let leg = div [attr.id "legend"] []
+        let leg = Elt.div [attr.id "legend"] []
 
         let graphlegend = Rickshaw.Graph.Legend(Legend(graph, leg.Dom))
 
@@ -62,7 +62,7 @@ module Client =
 
         let highlight = Rickshaw.Graph.Behaviour.Series.Highlight(GLegend(graph, graphlegend))
 
-        let smooth = div [attr.id "smoother"] []
+        let smooth = Elt.div [attr.id "smoother"] []
 
         let smoother = Rickshaw.Graph.Smoother(Legend(graph, smooth.Dom))
 
@@ -113,7 +113,7 @@ module Client =
         prevxa.Render()
         
         let form = 
-            div
+            Elt.div
                 [
                     attr.id "side-panel"
                     attr.style "float: left"
@@ -124,7 +124,7 @@ module Client =
                 ]
 
         let chart =
-            div
+            Elt.div
                 [
                     attr.style "float: left; margin: 10px"
                 ]
@@ -136,7 +136,7 @@ module Client =
 
 
         let content =
-            div
+            Elt.div
                 [
                     attr.id "content"
                     attr.style "float: left"

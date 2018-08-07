@@ -21,21 +21,21 @@ module Client =
                 new SeriesColor("Tokyo", "#6060c0")
             |]
 
-        let diagram = div [attr.id "diagram"] []
-
-        let graphdata =
-            FileConfig(
-                diagram.Dom,
-                "data.json",
-                Renderer="line",
-                Width=400,
-                Height=200,
-                OnData = (fun x -> x),
-                Series=color
+        div [
+            attr.id "diagram"
+            on.afterRender (fun diagram ->
+                let graphdata =
+                    FileConfig(
+                        diagram,
+                        "data.json",
+                        Renderer="line",
+                        Width=400,
+                        Height=200,
+                        OnData = (fun x -> x),
+                        Series=color
+                    )
+                let graph = Rickshaw.Graph.Ajax(graphdata)
+                ()
             )
-
-        let graph = Rickshaw.Graph.Ajax(graphdata)
-
-        div [] [
-            diagram
-        ]|> Doc.RunById "main"
+        ] []
+        |> Doc.RunById "main"
