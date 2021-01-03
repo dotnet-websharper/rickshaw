@@ -16,4 +16,4 @@ files
     ../Websharper.Rickshaw/bin/Release/netstandard2.0/WebSharper.Rickshaw.dll ==> lib/netstandard2.0
     ../Websharper.Rickshaw/bin/Release/netstandard2.0/WebSharper.Rickshaw.xml ==> lib/netstandard2.0
 dependencies
-        WebSharper ~> LOCKEDVERSION/3
+        WebSharper ~> LOCKEDVERSION:[3]
